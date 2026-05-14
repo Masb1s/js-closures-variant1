@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Практичні роботи 9 / 9.1 / 9.2 - Замикання</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+    h1 { margin-bottom: 10px; }
+    h2 { margin-top: 0; }
+    .tabs { margin-bottom: 20px; }
+    .tabs button { margin-right: 10px; padding: 8px 12px; cursor: pointer; }
+    .section { display: none; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    .section.active { display: block; }
+    .block { margin: 10px 0; }
+    input { padding: 4px; margin: 3px; }
+    button { padding: 6px 10px; margin: 3px; cursor: pointer; }
+    .output { margin-top: 8px; white-space: pre-wrap; background: #fafafa; padding: 8px; border-radius: 4px; border: 1px solid #ddd; }
+  </style>
+</head>
+<body>
+
+<h1>Практичні роботи 9, 9.1, 9.2 - Замикання</h1>
+
+<div class="tabs">
+  <button onclick="showSection('p9')">Практична 9 (Counter + Memo)</button>
+  <button onclick="showSection('p91')">Практична 9.1 (Counter Factory)</button>
+  <button onclick="showSection('p92')">Практична 9.2 (Memoization Library)</button>
+</div>
+
+<!-- Практична 9 -->
+<div id="p9" class="section active">
+  <h2>Практична 9 - Варіант 1</h2>
+
+  <div class="block">
+    <h3>Лічильники</h3>
+    <label>Початкове значення:</label>
+    <input type="number" id="p9_initialCounter" value="0">
+    <button id="p9_createCounter">Створити лічильник</button>
+    <button id="p9_inc">Збільшити</button>
+
+    <button id="p9_dec">Зменшити</button>
+    <button id="p9_reset">Скинути</button>
+    <div class="output" id="p9_counterOutput"></div>
+  </div>
+
+  <div class="block">
+    <h3>Лімітований лічильник</h3>
+    <label>Мін:</label><input type="number" id="p9_min" value="0">
+    <label>Макс:</label><input type="number" id="p9_max" value="5">
+    <button id="p9_createLimited">Створити</button>
+    <button id="p9_lc_inc">+</button>
+    <button id="p9_lc_dec">-</button>
+    <div class="output" id="p9_limitedOutput"></div>
+  </div>
+
+  <div class="block">
+    <h3>Лічильник з кроком</h3>
+    <label>Крок:</label><input type="number" id="p9_step" value="2">
+    <button id="p9_createStep">Створити</button>
+    <button id="p9_sc_inc">+</button>
+    <button id="p9_sc_dec">-</button>
+    <div class="output" id="p9_stepOutput"></div>
+  </div>
+
+  <div class="block">
+    <h3>Benchmark Fibonacci(40)</h3>
+    <button id="p9_runFib">Запустити</button>
+    <div class="output" id="p9_fibOutput"></div>
+  </div>
+</div>
+
+<!-- Практична 9.1 -->
+<div id="p91" class="section">
+  <h2>Практична 9.1 - Варіант 1</h2>
+
+  <div class="block">
+    <h3>Базовий лічильник</h3>
+    <label>Початкове значення:</label>
+    <input type="number" id="p91_initialCounter" value="0">
+    <button id="p91_createCounter">Створити</button>
+    <button id="p91_inc">+</button>
+    <button id="p91_dec">-</button>
+    <div class="output" id="p91_counterOutput"></div>
+  </div>
+
+  <div class="block">
+    <h3>Лімітований лічильник</h3>
+    <label>Мін:</label><input type="number" id="p91_min" value="0">
+    <label>Макс:</label><input type="number" id="p91_max" value="10">
+    <button id="p91_createLimited">Створити</button>
+    <button id="p91_lc_inc">+</button>
+    <button id="p91_lc_dec">-</button>
+    <div class="output" id="p91_limitedOutput"></div>
+  </div>
+
+  <div class="block">
+    <h3>Лічильник з кроком</h3>
+    <label>Крок:</label><input type="number" id="p91_step" value="3">
+    <button id="p91_createStep">Створити</button>
+    <button id="p91_sc_inc">+</button>
+    <button id="p91_sc_dec">-</button>
+    <div class="output" id="p91_stepOutput"></div>
+  </div>
+
+  <div class="block">
+    <h3>Іменований лічильник з історією</h3>
+    <label>Ім’я:</label><input type="text" id="p91_name" value="DemoCounter">
+    <label>Початкове значення:</label><input type="number" id="p91_namedInitial" value="5">
+    <button id="p91_createNamed">Створити</button>
+    <button id="p91_namedInc">+</button>
+    <button id="p91_namedDec">-</button>
+    <button id="p91_showHistory">Показати історію</button>
+    <div class="output" id="p91_namedOutput"></div>
+  </div>
+</div>
+
+<!-- Практична 9.2 -->
+<div id="p92" class="section">
+  <h2>Практична 9.2 - Варіант 1</h2>
+
+  <div class="block">
+    <h3> Базова мемоізація </h3>
+    <label>n для Fibonacci:</label><input type="number" id="p92_fibN" value="35">
+    <button id="p92_runFib">Запустити</button>
+    <div class="output" id="p92_fibOutput"></div>
+  </div>
+
+  <div class="block">
+    <h3> factorial з memoizeWith</h3>
+    <label>n:</label><input type="number" id="p92_factN" value="10">
+    <button id="p92_runFact">Обчислити</button>
+    <div class="output" id="p92_factOutput"></div>
+  </div>
+
+  <div class="block">
+    <h3> memoizeAsync (імітація API)</h3>
+    <label>id:</label><input type="number" id="p92_apiId" value="1">
+    <button id="p92_callApi">Викликати API</button>
+    <div class="output" id="p92_apiOutput"></div>
+  </div>
+
+  <div class="block">
+    <h3> memoizeExpiring + LRU + статистика</h3>
+    <button id="p92_runStats">Запустити тест</button>
+    <div class="output" id="p92_statsOutput"></div>
+  </div>
+</div>
+
+<script>
+  //Перемикання розділів
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  //Counter Factory
+  function createCounter(initial = 0) {
+    let count = initial;
+    return {
+      increment() { count++; return count; },
+      decrement() { count--; return count; },
+      get() { return count; },
+      reset() { count = initial; return count; }
+    };
+  }
+
+  function createLimitedCounter(min, max) {
+    let value = min;
+    return {
+      increment() { if (value < max) value++; return value; },
+      decrement() { if (value > min) value--; return value; },
+      get() { return value; }
+    };
+  }
+
+  function createStepCounter(step = 1) {
+    let value = 0;
+    return {
+      inc() { value += step; return value; },
+      dec() { value -= step; return value; },
+      get() { return value; }
+    };
+  }
+
+  function createNamedCounter(name, initial = 0) {
+    let count = initial;
+    const history = [];
+    function log(action) {
+      history.push({ action, value: count, time: new Date().toLocaleTimeString() });
+    }
+    return {
+      increment() { count++; log('increment'); return count; },
+      decrement() { count--; log('decrement'); return count; },
+      get() { return count; },
+      getHistory() { return [...history]; },
+      getName() { return name; }
+    };
+  }
+
+  //Memoization Library
+  function createLRUCache(maxSize) {
+    const map = new Map();
+    let hits = 0, misses = 0;
+    return {
+      get(key) {
+        if (!map.has(key)) { misses++; return undefined; }
+        const value = map.get(key);
+        map.delete(key);
+        map.set(key, value);
+        hits++;
+        return value;
+      },
+      set(key, value) {
+        if (map.has(key)) map.delete(key);
+        map.set(key, value);
+        if (map.size > maxSize) {
+          const firstKey = map.keys().next().value;
+          map.delete(firstKey);
+        }
+      },
+      stats() { return { hits, misses, size: map.size }; }
+    };
+  }
+
+  function memoize(fn, maxSize = 100) {
+    const cache = createLRUCache(maxSize);
+    return Object.assign(function (...args) {
+      const key = JSON.stringify(args);
+      const cached = cache.get(key);
+      if (cached !== undefined) return cached;
+      const result = fn(...args);
+      cache.set(key, result);
+      return result;
+    }, { getStats: cache.stats });
+  }
+
+  function memoizeWith(fn, keyFn, maxSize = 100) {
+    const cache = createLRUCache(maxSize);
+    return Object.assign(function (...args) {
+      const key = keyFn(...args);
+      const cached = cache.get(key);
+      if (cached !== undefined) return cached;
+      const result = fn(...args);
+      cache.set(key, result);
+      return result;
+    }, { getStats: cache.stats });
+  }
+
+  function memoizeAsync(fn, maxSize = 100) {
+    const cache = createLRUCache(maxSize);
+    return Object.assign(async function (...args) {
+      const key = JSON.stringify(args);
+      const cached = cache.get(key);
+      if (cached !== undefined) return cached;
+      const result = await fn(...args);
+      cache.set(key, result);
+      return result;
+    }, { getStats: cache.stats });
+  }
+
+  function memoizeExpiring(fn, ttlMs, maxSize = 100) {
+    const cache = createLRUCache(maxSize);
+    const times = new Map();
+    return Object.assign(function (...args) {
+      const key = JSON.stringify(args);
+      const now = Date.now();
+      const cached = cache.get(key);
+      const exp = times.get(key);
+      if (cached !== undefined && exp && now < exp) return cached;
+      const result = fn(...args);
+      cache.set(key, result);
+      times.set(key, now + ttlMs);
+      return result;
+    }, { getStats: cache.stats });
+  }
+
+  //Допоміжні функції
+  function fib(n) {
+    if (n <= 1) return n;
+    return fib(n - 1) + fib(n - 2);
+  }
+
+  function factorial(n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+  }
+
+  //Практична 9
+  (function setupP9() {
+    let counter, limited, stepCounter;
+
+    const outCounter = document.getElementById('p9_counterOutput');
+    const outLimited = document.getElementById('p9_limitedOutput');
+    const outStep = document.getElementById('p9_stepOutput');
+    const outFib = document.getElementById('p9_fibOutput');
+
+    document.getElementById('p9_createCounter').onclick = () => {
+      const init = Number(document.getElementById('p9_initialCounter').value);
+      counter = createCounter(init);
+      outCounter.textContent = `Лічильник створено. Поточне значення: ${counter.get()}`;
+    };
+    document.getElementById('p9_inc').onclick = () => outCounter.textContent = `Значення: ${counter.increment()}`;
+    document.getElementById('p9_dec').onclick = () => outCounter.textContent = `Значення: ${counter.decrement()}`;
+    document.getElementById('p9_reset').onclick = () => outCounter.textContent = `Скинуто до: ${counter.reset()}`;
+
+    document.getElementById('p9_createLimited').onclick = () => {
+      const min = Number(document.getElementById('p9_min').value);
+      const max = Number(document.getElementById('p9_max').value);
+      limited = createLimitedCounter(min, max);
+      outLimited.textContent = `Лімітований лічильник: ${limited.get()} (межі ${min}..${max})`;
+    };
+    document.getElementById('p9_lc_inc').onclick = () => outLimited.textContent = `Значення: ${limited.increment()}`;
+    document.getElementById('p9_lc_dec').onclick = () => outLimited.textContent = `Значення: ${limited.decrement()}`;
+
+    document.getElementById('p9_createStep').onclick = () => {
+      const step = Number(document.getElementById('p9_step').value);
+      stepCounter = createStepCounter(step);
+      outStep.textContent = `Створено лічильник з кроком ${step}. Поточне: ${stepCounter.get()}`;
+    };
+    document.getElementById('p9_sc_inc').onclick = () => outStep.textContent = `Значення: ${stepCounter.inc()}`;
+    document.getElementById('p9_sc_dec').onclick = () => outStep.textContent = `Значення: ${stepCounter.dec()}`;
+
+    const memoFib40 = memoize(fib);
+    document.getElementById('p9_runFib').onclick = () => {
+      const n = 40;
+      const t1 = performance.now();
+      fib(n);
+      const t2 = performance.now();
+      const t3 = performance.now();
+      memoFib40(n);
+      const t4 = performance.now();
+      outFib.textContent =
+        `fibonacci(${n}) без мемоізації: ${(t2 - t1).toFixed(2)} ms\n` +
+        `fibonacci(${n}) з мемоізацією: ${(t4 - t3).toFixed(2)} ms`;
+    };
+  })();
+
+  //Практична 9.1
+  (function setupP91() {
+    let counter, limited, stepCounter, named;
+
+    const outCounter = document.getElementById('p91_counterOutput');
+    const outLimited = document.getElementById('p91_limitedOutput');
+    const outStep = document.getElementById('p91_stepOutput');
+    const outNamed = document.getElementById('p91_namedOutput');
+
+    document.getElementById('p91_createCounter').onclick = () => {
+      const init = Number(document.getElementById('p91_initialCounter').value);
+      counter = createCounter(init);
+      outCounter.textContent = `Лічильник: ${counter.get()}`;
+    };
+    document.getElementById('p91_inc').onclick = () => outCounter.textContent = `Значення: ${counter.increment()}`;
+    document.getElementById('p91_dec').onclick = () => outCounter.textContent = `Значення: ${counter.decrement()}`;
+
+    document.getElementById('p91_createLimited').onclick = () => {
+      const min = Number(document.getElementById('p91_min').value);
+      const max = Number(document.getElementById('p91_max').value);
+      limited = createLimitedCounter(min, max);
+      outLimited.textContent = `Лімітований: ${limited.get()} (межі ${min}..${max})`;
+    };
+    document.getElementById('p91_lc_inc').onclick = () => outLimited.textContent = `Значення: ${limited.increment()}`;
+    document.getElementById('p91_lc_dec').onclick = () => outLimited.textContent = `Значення: ${limited.decrement()}`;
+
+    document.getElementById('p91_createStep').onclick = () => {
+      const step = Number(document.getElementById('p91_step').value);
+      stepCounter = createStepCounter(step);
+      outStep.textContent = `Кроковий: ${stepCounter.get()} (крок ${step})`;
+    };
+    document.getElementById('p91_sc_inc').onclick = () => outStep.textContent = `Значення: ${stepCounter.inc()}`;
+    document.getElementById('p91_sc_dec').onclick = () => outStep.textContent = `Значення: ${stepCounter.dec()}`;
+
+    document.getElementById('p91_createNamed').onclick = () => {
+      const name = document.getElementById('p91_name').value;
+      const init = Number(document.getElementById('p91_namedInitial').value);
+      named = createNamedCounter(name, init);
+      outNamed.textContent = `Створено "${named.getName()}" зі значенням ${named.get()}`;
+    };
+    document.getElementById('p91_namedInc').onclick = () => outNamed.textContent = `Значення: ${named.increment()}`;
+    document.getElementById('p91_namedDec').onclick = () => outNamed.textContent = `Значення: ${named.decrement()}`;
+    document.getElementById('p91_showHistory').onclick = () => {
+      const hist = named.getHistory().map(h => `${h.action} → ${h.value} (${h.time})`).join('\n');
+      outNamed.textContent = `Історія:\n${hist}`;
+    };
+  })();
+
+  //Практична 9.2
+  (function setupP92() {
+    const outFib = document.getElementById('p92_fibOutput');
+    const outFact = document.getElementById('p92_factOutput');
+    const outApi = document.getElementById('p92_apiOutput');
+    const outStats = document.getElementById('p92_statsOutput');
+
+    const memoFib = memoize(fib, 200);
+    const memoFact = memoizeWith(factorial, n => `fact:${n}`, 200);
+
+    document.getElementById('p92_runFib').onclick = () => {
+      const n = Number(document.getElementById('p92_fibN').value);
+      const t1 = performance.now();
+      fib(n);
+      const t2 = performance.now();
+      const t3 = performance.now();
+      memoFib(n);
+      const t4 = performance.now();
+      const stats = memoFib.getStats();
+      outFib.textContent =
+        `Fibonacci(${n}) без мемоізації: ${(t2 - t1).toFixed(2)} ms\n` +
+        `Fibonacci(${n}) з мемоізацією: ${(t4 - t3).toFixed(2)} ms\n` +
+        `Статистика: hits=${stats.hits}, misses=${stats.misses}, size=${stats.size}`;
+    };
+
+    document.getElementById('p92_runFact').onclick = () => {
+      const n = Number(document.getElementById('p92_factN').value);
+      const t1 = performance.now();
+      factorial(n);
+      const t2 = performance.now();
+      const t3 = performance.now();
+      const r = memoFact(n);
+      const t4 = performance.now();
+      const stats = memoFact.getStats();
+      outFact.textContent =
+        `factorial(${n}) = ${r}\n` +
+        `Без мемоізації: ${(t2 - t1).toFixed(2)} ms\n` +
+        `З memoizeWith: ${(t4 - t3).toFixed(2)} ms\n` +
+        `Статистика: hits=${stats.hits}, misses=${stats.misses}, size=${stats.size}`;
+    };
+
+    const fakeApi = async (id) => {
+      await new Promise(r => setTimeout(r, 400));
+      return { id, data: `Результат для id=${id}`, time: new Date().toLocaleTimeString() };
+    };
+    const memoApi = memoizeAsync(fakeApi, 50);
+
+    document.getElementById('p92_callApi').onclick = async () => {
+      const id = Number(document.getElementById('p92_apiId').value);
+      const t1 = performance.now();
+      const r1 = await memoApi(id);
+      const t2 = performance.now();
+      const r2 = await memoApi(id);
+      const t3 = performance.now();
+      const stats = memoApi.getStats();
+      outApi.textContent =
+        `Перший виклик: ${(t2 - t1).toFixed(2)} ms, data: ${r1.data}\n` +
+        `Другий (з кешу): ${(t3 - t2).toFixed(2)} ms, data: ${r2.data}\n` +
+        `Статистика: hits=${stats.hits}, misses=${stats.misses}, size=${stats.size}`;
+    };
+
+    document.getElementById('p92_runStats').onclick = () => {
+      const fn = (x) => x * x;
+      const memoTTL = memoizeExpiring(fn, 200, 5);
+      for (let i = 0; i < 10; i++) memoTTL(i % 3);
+      const stats = memoTTL.getStats();
+      outStats.textContent =
+        `Тест memoizeExpiring + LRU\n` +
+        `hits=${stats.hits}, misses=${stats.misses}, size=${stats.size}`;
+    };
+  })();
+</script>
+
+</body>
+</html>
